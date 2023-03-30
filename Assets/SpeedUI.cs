@@ -5,7 +5,7 @@ public class SpeedUI : MonoBehaviour
 {
 
     public Text speed_text;
-    [SerializeField] Car car;
+    [SerializeField] CarController car;
     // Start is called before the first frame update
     // Update is called once per frame
     void Update()
