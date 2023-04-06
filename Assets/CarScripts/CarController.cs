@@ -18,6 +18,7 @@ public class CarController : MonoBehaviour
     public LayerMask whatIsGround;
     public float groundRayLength = 0.5f;
     public Transform groundRayPoint;
+    public Transform groundRayPoint2;
 
     public Transform leftfront, rightfront;
     public float maxWheelTurn=25;
@@ -34,7 +35,7 @@ public class CarController : MonoBehaviour
     {
         grounded = false;
         RaycastHit hit;
-        if (Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLength, whatIsGround))
+        if (Physics.Raycast(groundRayPoint.position, -transform.up, out hit, groundRayLength, whatIsGround) || Physics.Raycast(groundRayPoint2.position, -transform.up, out hit, groundRayLength, whatIsGround))
         {
             grounded = true;
             transform.rotation = Quaternion.FromToRotation(transform.up, hit.normal) * transform.rotation;

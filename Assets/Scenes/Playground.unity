@@ -252,6 +252,37 @@ WheelCollider:
     m_AsymptoteValue: 0.75
     m_Stiffness: 1
   m_Enabled: 1
+--- !u!1 &359000182
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 359000183}
+  m_Layer: 0
+  m_Name: ray point2
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &359000183
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 359000182}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: -0.7, z: 1.605}
+  m_LocalScale: {x: 1, y: 0.9, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1582489322}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &590174787
 GameObject:
   m_ObjectHideFlags: 0
@@ -352,8 +383,8 @@ GameObject:
   - component: {fileID: 671015403}
   - component: {fileID: 671015402}
   m_Layer: 0
-  m_Name: Cube (1)
-  m_TagString: Untagged
+  m_Name: wall
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -365,7 +396,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 671015401}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 683ef777798659444b054c214b595859, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1030,7 +1061,7 @@ GameObject:
   - component: {fileID: 1486488908}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: wall
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1042,7 +1073,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1486488907}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 683ef777798659444b054c214b595859, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1106,8 +1137,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1486488907}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.72, y: 0.61, z: 2.78}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 10, y: 1, z: 35}
+  m_LocalScale: {x: 1, y: 35, z: 35}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -1255,6 +1286,7 @@ GameObject:
   - component: {fileID: 1582489323}
   - component: {fileID: 1582489325}
   - component: {fileID: 1582489326}
+  - component: {fileID: 1582489327}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -1295,6 +1327,7 @@ Transform:
   - {fileID: 1476593148}
   - {fileID: 940272391}
   - {fileID: 1799376112}
+  - {fileID: 359000183}
   m_Father: {fileID: 0}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1335,7 +1368,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1582489320}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 68014f96e0eb4ad45a4220048ccecebf, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -1368,9 +1401,25 @@ MonoBehaviour:
     m_Bits: 8
   groundRayLength: 0.5
   groundRayPoint: {fileID: 1476593148}
+  groundRayPoint2: {fileID: 359000183}
   leftfront: {fileID: 221674883}
   rightfront: {fileID: 1768401701}
   maxWheelTurn: 25
+--- !u!114 &1582489327
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1582489320}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9277aa046d72a654abd83cf87b375a24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 1582489321}
+  sphere: {fileID: 1778500210}
+  bounceStr: 500
 --- !u!1 &1588139936
 GameObject:
   m_ObjectHideFlags: 0
@@ -2328,7 +2377,7 @@ BoxCollider:
   m_GameObject: {fileID: 2544279081362268633}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 0.02269661, y: 0.055, z: 0.012554284}
+  m_Size: {x: 0.02269661, y: 0, z: 0.012554284}
   m_Center: {x: 0, y: 0, z: -0.00059496134}
