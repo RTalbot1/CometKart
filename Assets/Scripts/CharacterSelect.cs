@@ -26,8 +26,7 @@ public class CharacterSelect: MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             PlayerPrefs.SetInt("SelectedCharacter", SelectedCharacter);
-            // load the next scene here
-            //SceneManager.LoadScene(sceneName: "Game");
+            SceneManager.LoadScene(sceneName: "Race");
         }
     }
 
