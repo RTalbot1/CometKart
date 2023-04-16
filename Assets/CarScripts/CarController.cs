@@ -24,6 +24,10 @@ public class CarController : MonoBehaviour
     public float maxWheelTurn=25;
     public GameObject[] characters;
 
+    //boosting fields
+    private float boost = 8f;
+    private bool boosting = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +49,12 @@ public class CarController : MonoBehaviour
         if (grounded)
         {
             sphere.drag = dragOnGround;
-            if (Mathf.Abs(speedInput) > 0)
+            //fixedupdate speedboost
+            if (Mathf.Abs(speedInput) > 0 && boosting)
+            {
+                sphere.AddForce(transform.forward * speedInput * boost);
+            }
+            else if (Mathf.Abs(speedInput) > 0 && !boosting)
             {
                 sphere.AddForce(transform.forward * speedInput);
             }
@@ -73,20 +82,49 @@ public class CarController : MonoBehaviour
         }
 
         turnInput = playerInput.actions["FullMovement"].ReadValue<Vector2>().x;
-        if (playerInput.actions["Drift"].IsPressed() && Mathf.Abs(speedInput) > 0)
+        if (playerInput.actions["Drift"].IsPressed() && speedInput > 0)
         {
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, turnInput * driftStrength * Time.deltaTime, 0f));
             maxWheelTurn = 40;
         }
-        else if (Mathf.Abs(speedInput) > 0)
+        else if (speedInput > 0)
         { 
             transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, turnInput * turnStrength * Time.deltaTime, 0f));
             maxWheelTurn = 30;
         }
+        else if(playerInput.actions["Drift"].IsPressed() && speedInput < 0)
+        {
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, -turnInput * driftStrength * Time.deltaTime, 0f));
+            maxWheelTurn = 40;
+        }
+        else if (speedInput < 0)
+        {
+            transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, -turnInput * turnStrength * Time.deltaTime, 0f));
+            maxWheelTurn = 30;
+        }
+
 
         leftfront.localRotation = Quaternion.Euler(leftfront.localRotation.eulerAngles.x, leftfront.localRotation.eulerAngles.y, turnInput * maxWheelTurn - 90) ;
         rightfront.localRotation = Quaternion.Euler(rightfront.localRotation.eulerAngles.x, rightfront.localRotation.eulerAngles.y, turnInput * maxWheelTurn - 90 );
 
         transform.position = sphere.transform.position;
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "powerUP")
+        {
+            boosting = true;
+            Debug.Log("boosting");
+        }
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "powerUP")
+        {
+            boosting = false;
+        }
     }
 }
