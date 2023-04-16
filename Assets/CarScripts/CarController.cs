@@ -24,6 +24,10 @@ public class CarController : MonoBehaviour
     public float maxWheelTurn=25;
     public GameObject[] characters;
 
+    //boosting fields
+    private float boost = 8f;
+    private bool boosting = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +49,12 @@ public class CarController : MonoBehaviour
         if (grounded)
         {
             sphere.drag = dragOnGround;
-            if (Mathf.Abs(speedInput) > 0)
+            //fixedupdate speedboost
+            if (Mathf.Abs(speedInput) > 0 && boosting)
+            {
+                sphere.AddForce(transform.forward * speedInput * boost);
+            }
+            else if (Mathf.Abs(speedInput) > 0 && !boosting)
             {
                 sphere.AddForce(transform.forward * speedInput);
             }
@@ -88,5 +97,22 @@ public class CarController : MonoBehaviour
         rightfront.localRotation = Quaternion.Euler(rightfront.localRotation.eulerAngles.x, rightfront.localRotation.eulerAngles.y, turnInput * maxWheelTurn - 90 );
 
         transform.position = sphere.transform.position;
+    }
+
+    private void OnTriggerEnter(Collider collision)
+    {
+        if (collision.gameObject.tag == "powerUP")
+        {
+            boosting = true;
+        }
+
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.gameObject.tag == "powerUP")
+        {
+            boosting = false;
+        }
     }
 }
