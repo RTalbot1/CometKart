@@ -65,10 +65,7 @@ public class CarAIController : MonoBehaviour
         Vector3 direction = waypoints[currentWaypoint].position - sphere.transform.position;
         direction.y = 0f;
 
-        //Debug.Log("Current Waypoint: " + currentWaypoint);
-        //Debug.Log("Max Speed: " + maxSpeed);
-
-        if (direction.magnitude < 3f)
+        if (direction.magnitude < 15f)
         {
             currentWaypoint++;
 
@@ -76,30 +73,42 @@ public class CarAIController : MonoBehaviour
             {
                 currentWaypoint = 0;
             }
+
+            direction = waypoints[currentWaypoint].position - sphere.transform.position;
+            direction.y = 0f;
         }
+
+        float angle = Vector3.Angle(transform.forward, direction);
+
+        if (angle > 0f)
+        {
+            Debug.Log("Angle: " + angle);
+        }
+
+        if(angle >= 30)
+        {
+            speedInput = forwardAccel * -125000 * Time.deltaTime;
+        } 
+        else if (angle >= 1)
+        {
+            speedInput = forwardAccel * -50000 * Time.deltaTime;
+        } 
         else
         {
-            float angle = Vector3.SignedAngle(transform.forward, direction, Vector3.up);
-
-            float angleFactor = Mathf.Clamp01(1.5f - Mathf.Abs(angle) / 90f);
-            float distanceFactor = Mathf.Clamp01(direction.magnitude / 10f);
-            float speedFactor = Mathf.Min(angleFactor, distanceFactor);
-            float targetSpeed = maxSpeed * speedFactor;
-
-            speedInput = forwardAccel * 100000 * Time.deltaTime;
-
-            if (Mathf.Abs(speedInput) > 0)
-            {
-                //transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, turnStrength * Time.deltaTime, 0f));
-                maxWheelTurn = 30;
-            }
-
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(direction), turnStrength * Time.deltaTime);
-
-            leftfront.localRotation = Quaternion.Euler(leftfront.localRotation.eulerAngles.x, leftfront.localRotation.eulerAngles.y, maxWheelTurn - 90);
-            rightfront.localRotation = Quaternion.Euler(rightfront.localRotation.eulerAngles.x, rightfront.localRotation.eulerAngles.y, maxWheelTurn - 90);
-
-            transform.position = sphere.transform.position;
+            speedInput = forwardAccel * 250000 * Time.deltaTime;
         }
+
+        if (Mathf.Abs(speedInput) > 0)
+        {
+            //transform.rotation = Quaternion.Euler(transform.rotation.eulerAngles + new Vector3(0f, turnStrength * Time.deltaTime, 0f));
+            maxWheelTurn = 30;
+        }
+
+        transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(direction), turnStrength * Time.deltaTime);
+
+        leftfront.localRotation = Quaternion.Euler(leftfront.localRotation.eulerAngles.x, leftfront.localRotation.eulerAngles.y, maxWheelTurn - 90);
+        rightfront.localRotation = Quaternion.Euler(rightfront.localRotation.eulerAngles.x, rightfront.localRotation.eulerAngles.y, maxWheelTurn - 90);
+
+        transform.position = sphere.transform.position;
     }
 }
