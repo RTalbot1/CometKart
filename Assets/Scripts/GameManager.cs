@@ -145,14 +145,15 @@ public class GameManager : MonoBehaviour
     
     private void SetUpBot(GameObject bot, string pathName, Vector3 translate)
     {
-        GameObject botSphereObj = new GameObject();
+        GameObject botSphereObj = new GameObject(bot.name + " Sphere");
         botSphereObj.transform.localScale = new Vector3(1 / 3, 1 / 3, 1 / 3);
         SphereCollider sphereCollider = botSphereObj.AddComponent<SphereCollider>();
         sphereCollider.radius = 0.45f;
         Rigidbody botSphere = botSphereObj.AddComponent<Rigidbody>();
-        botSphere.mass = sphere.mass;
-        botSphere.drag = sphere.drag;
-        botSphere.angularDrag = sphere.angularDrag;
+        botSphere.mass = 70;
+        botSphere.drag = 3;
+        botSphere.angularDrag = 4;
+        botSphere.interpolation = RigidbodyInterpolation.Extrapolate;
 
         bot.transform.Translate(translate);
         botSphere.transform.position = sphere.position - translate;

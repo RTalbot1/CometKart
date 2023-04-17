@@ -87,11 +87,11 @@ public class CarAIController : MonoBehaviour
 
         if(angle >= 30)
         {
-            speedInput = forwardAccel * -125000 * Time.deltaTime;
+            speedInput = forwardAccel * 10000 * Time.deltaTime;
         } 
         else if (angle >= 1)
         {
-            speedInput = forwardAccel * -50000 * Time.deltaTime;
+            speedInput = forwardAccel * 150000 * Time.deltaTime;
         } 
         else
         {

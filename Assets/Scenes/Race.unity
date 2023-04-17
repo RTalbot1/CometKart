@@ -17630,7 +17630,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 964363698}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.802, y: -2.15, z: -10.32}
+  m_LocalPosition: {x: 0.802, y: -2.15, z: -7.95}
   m_LocalScale: {x: 0.14816001, y: 1, z: 8}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -18148,7 +18148,7 @@ Transform:
   - {fileID: 1791163818}
   - {fileID: 886408191}
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &989424641
 MeshRenderer:
@@ -34918,7 +34918,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 90, y: -90, z: 0}
 --- !u!1 &1977680434
 GameObject:
@@ -40256,9 +40256,8 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1809794387477693206}
+  - component: {fileID: 6768564399834388766}
   - component: {fileID: 6768564399834388764}
-  - component: {fileID: 4142473112930722985}
   - component: {fileID: 6768564399834388765}
   m_Layer: 3
   m_Name: Road Angle
@@ -40661,6 +40660,21 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 20.000017, y: 43.000023, z: 7.0000052}
   m_Center: {x: -5.999947, y: -40.50002, z: 3.5000052}
+--- !u!4 &6768564399834388766
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3596776571549479520}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &6895069726581913063
 GameObject:
   m_ObjectHideFlags: 0
