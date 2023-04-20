@@ -13,20 +13,15 @@ public class GameManager : MonoBehaviour
     public Text raceResultText;
     
     public int playerLaps = 0;
-    private int botLaps = 0;
+    private int player2Laps = 0;
     private bool raceStarted = false;
     public bool raceFinished = false;
     private float raceTime = 0f;
 
     public GameObject[] characters;
     public Rigidbody sphere;
-    public GameObject player1; 
+    public GameObject player1;
     private GameObject player;
-    private GameObject bot1;
-    private GameObject bot2;
-    private GameObject bot3;
-
-    private GameObject aiPaths;
 
     //public GameObject camera;
     public CinemachineVirtualCamera virtualCamera;
@@ -56,14 +51,18 @@ public class GameManager : MonoBehaviour
       
         //save the player input
         PlayerInput pi = player1.GetComponent<PlayerInput>();
-       
+        //PlayerInput pi2 = player2.GetComponent<PlayerInput>();
+
 
         // set up player
         setUpRigidBody(player);
         setUpBoxCollider(player);
         setUpBounce(player, sphere);
-        setUpCarController(player, sphere, pi);
-        
+        setUpCarController(player, sphere, pi); setUpRigidBody(player);
+        /*setUpBoxCollider(player);
+        setUpBounce(player, sphere);
+        setUpCarController(player, sphere, pi2);*/
+
         player.tag = "Player";
         player.SetActive(true);
        
@@ -73,35 +72,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        aiPaths = GameObject.FindGameObjectsWithTag("Paths").First();
-
-        bot1 = player;
-        bot2 = player;
-        bot3 = player;
-        int botIndex = 0;
-        for (int i = 0; i < characters.Length; i++)
-        {
-            if (characters[i] != player)
-            {
-                switch (botIndex)
-                {
-                    case 0:
-                        bot1 = characters[i];
-                        break;
-                    case 1:
-                        bot2 = characters[i];
-                        break;
-                    case 2:
-                        bot3 = characters[i];
-                        break;
-                }
-                botIndex++;
-            }
-        }
-
-        SetUpBot(bot1, "Path1", new Vector3(10, 0, 0));
-        SetUpBot(bot2, "Path2", new Vector3(-10, 0, 0));
-        SetUpBot(bot3, "Path3", new Vector3(-20, 0, 0));
+        
     }
 
     void Update()
@@ -120,10 +91,10 @@ public class GameManager : MonoBehaviour
         //     playerLaps++;
         //     lapText.text = "Player Lap: " + playerLaps + "/" + numLaps;
         // }
-        // else if (other.gameObject == bot && botLaps < numLaps)
+        // else if (other.gameObject == bot && player2Laps < numLaps)
         // {
-        //     botLaps++;
-        //     lapText.text = "Bot Lap: " + botLaps + "/" + numLaps;
+        //     player2Laps++;
+        //     lapText.text = "Bot Lap: " + player2Laps + "/" + numLaps;
         // }
 
         // Check if the race has finished
@@ -137,12 +108,10 @@ public class GameManager : MonoBehaviour
     {
         // Enable vehicle controls and start the race
         player.GetComponent<CarController>().enabled = true;
-        bot1.GetComponent<CarAIController>().enabled = true;
-        bot2.GetComponent<CarAIController>().enabled = true;
-        bot3.GetComponent<CarAIController>().enabled = true;
+        
         raceStarted = true;
     }
-    
+    /*
     private void SetUpBot(GameObject bot, string pathName, Vector3 translate)
     {
         GameObject botSphereObj = new GameObject();
@@ -161,7 +130,7 @@ public class GameManager : MonoBehaviour
         setUpBounce(bot, botSphere);
         setUpCarAIController(bot, botSphere, aiPaths.transform.Find(pathName));
         bot.SetActive(true);
-    }
+    }*/
 
     private void setUpRigidBody(GameObject player) 
     {
@@ -238,7 +207,7 @@ public class GameManager : MonoBehaviour
 
     }
 
-    private void setUpCarAIController(GameObject player, Rigidbody sphere, Transform path)
+   /* private void setUpCarAIController(GameObject player, Rigidbody sphere, Transform path)
     {
         Debug.Log("Set up Car AI controller");
         CarAIController c = player.AddComponent<CarAIController>();
@@ -295,7 +264,7 @@ public class GameManager : MonoBehaviour
         
         c.enabled = false;
 
-    }
+    }*/
     private void setUpBounce(GameObject player, Rigidbody sphere)
     {
         Bounce b = player.AddComponent<Bounce>();
@@ -312,11 +281,11 @@ public class GameManager : MonoBehaviour
         //bot.GetComponent<BotController>().enabled = false;
         raceResultText.text = "Race Finished in " + raceTime.ToString("F2") + " seconds. ";
         
-        if (playerLaps > botLaps)
+        if (playerLaps > player2Laps)
         {
             raceResultText.text += "Player Wins!";
         }
-        else if (botLaps > playerLaps)
+        else if (player2Laps > playerLaps)
         {
             raceResultText.text += "Bot Wins!";
         }
