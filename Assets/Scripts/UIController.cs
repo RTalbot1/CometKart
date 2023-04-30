@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,54 +6,59 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.EventSystems;
-
 public class UIController : MonoBehaviour
 {
-    public TMP_Text lapText;
-    public TMP_Text raceResultText;
     public Button startButton;
+    public TMP_Text lable;
+    public GameObject mainMenu;
+    public GameObject quit;
     public TMP_Text countdownText;
-
     public float countdownDuration = 3f;
-
     private GameManager gameManager;
     void Start()
     {
         // Get a reference to the GameManager script
         gameManager = FindObjectOfType<GameManager>();
-        //startButton.SetActive(true);
-
-        // Set up the UI components
-        lapText.text = "Lap: 0/" + gameManager.numLaps;
-        raceResultText.gameObject.SetActive(false);
         countdownText.gameObject.SetActive(false);
-
-        // Add an OnClick event to the Start button
+        lable.gameObject.SetActive(false);
+        mainMenu.SetActive(false);
+        quit.SetActive(false);
     }
-
     void Update()
     {
-        // Update the lap text based on the player's progress
-        lapText.text = "Lap " + gameManager.playerLaps + "/" + gameManager.numLaps;
-
-        // Check if the race has finished
-        if (gameManager.raceFinished)
-        {
-            raceResultText.gameObject.SetActive(true);
-            countdownText.gameObject.SetActive(false);
-        }
+       if(gameManager.raceFinished)
+       {
+            lable.gameObject.SetActive(true);
+            int p = gameManager.playerPos;
+            Debug.Log(p);
+            if(p == 5)
+            {
+                lable.text = "You placed first!";
+            }
+            else if(p == 6)
+            {
+                lable.text = "You placed second!";
+            }
+            else if(p == 7)
+            {
+                lable.text = "You placed third!";
+            }
+           else if(p == 8)
+            {
+                lable.text = "You placed forth!";
+            }
+            mainMenu.SetActive(true);
+            quit.SetActive(true);
+       }
     }
-
     public void StartCountdown()
     {
         // Hide the start button and show the countdown text
         startButton.gameObject.SetActive(false);
         countdownText.gameObject.SetActive(true);
-
         // Start the countdown
         StartCoroutine(Countdown());
     }
-
     IEnumerator Countdown()
     {
         // Count down from the duration of the countdown
@@ -61,15 +67,15 @@ public class UIController : MonoBehaviour
             countdownText.text = Mathf.Ceil(i).ToString();
             yield return null;
         }
-
         // Start the race after the countdown finishes
         countdownText.text = "GO!";
         //yield return new WaitForSeconds(1f);
         countdownText.gameObject.SetActive(false);
-        lapText.gameObject.SetActive(true);
         gameManager.StartRace();
     }
-
+    public void QuitGame() {  
+       Application.Quit();
+    }  
     public void ReturnToMainMenu()
     {
         // Return to the main menu scene
